@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "52367543427",
+    "firebase_url": "https://havana-206606.firebaseio.com",
+    "project_id": "havana-206606",
+    "storage_bucket": "havana-206606.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52367543427:android:1cf867281899e515",
+        "android_client_info": {
+          "package_name": "vignanahead.com.vignanaheadwv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52367543427-i7i69tugn6rf0kjeubqqjn71ledfccsd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vignanahead.com.vignanaheadwv",
+            "certificate_hash": "2b62118ea7d2b1ec20a38b96e7def025a8b9e13f"
+          }
+        },
+        {
+          "client_id": "52367543427-iob7o7aspos8h1tf4ntu0111p3f854qr.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "52367543427-iob7o7aspos8h1tf4ntu0111p3f854qr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAA7pK99cPfjDJKEY2g_pt6-4Ysc2678PA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "52367543427-iob7o7aspos8h1tf4ntu0111p3f854qr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
