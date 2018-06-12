@@ -51,29 +51,9 @@ public class TourAdapter extends ArrayAdapter<Tour> {
             vi = inflater.inflate(R.layout.tour_list, null);
         Tour currentTour=tours.get(position);
         ((TextView)vi.findViewById(R.id.txt)).setText(currentTour.tourName);
-        String imageLink = currentTour.tourImageLink;
-        new DownloadImage().execute(imageLink);
+        ((ImageView)vi.findViewById(R.id.img)).setImageBitmap(currentTour.tourImage);
         return vi;
     }
 
-    private class DownloadImage extends AsyncTask<String,Void,Bitmap> {
-        @Override
-        protected Bitmap doInBackground(String... Url) {
-            String imageUrl = Url[0];
-            Log.d("Downloader","In Downloader");
-            Bitmap bitmap = null;
-            try{
-                InputStream is=new URL(imageUrl).openStream() ;
-                bitmap = BitmapFactory.decodeStream(is);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            return bitmap;
-        }
 
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            ((ImageView)vi.findViewById(R.id.img)).setImageBitmap(bitmap);
-        }
-    }
 }

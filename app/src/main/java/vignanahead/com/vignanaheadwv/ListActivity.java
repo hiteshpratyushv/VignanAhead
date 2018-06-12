@@ -41,6 +41,7 @@ import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity {
     static final String TAG = "Firebase";
+    Bitmap[] images;
     Context context = this;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference Links = database.getReference("Links");
@@ -68,7 +69,18 @@ public class ListActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 toursDS=dataSnapshot;
                 Log.d(TAG,"toursDone");
-                tourComp=true;
+                images = new Bitmap[(int)toursDS.getChildrenCount()];
+                for (int i=1;i<=toursDS.getChildrenCount();i++)
+                {
+                    final int id = i;
+                    String tourName =(String) toursDS.child(i+"").getValue();
+                    StorageRef.child(tourName+".jpg").getDownloadUrl()
+                            .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    new DownloadImage().execute(uri.toString(),(id-1)+"");
+                                }});
+                }
             }
 
             @Override
@@ -89,40 +101,25 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
-
-         new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG,"Starting List Creation");
-                adapter = new TourAdapter(context,tours);
+                Log.d(TAG, "Starting List Creation");
+                adapter = new TourAdapter(context, tours);
                 tourList.setAdapter(adapter);
-                for(int i=1;i<=toursDS.getChildrenCount();i++)
-                {
-                    final String tourName = (String) toursDS.child(i+"").getValue();
-                    final String[] imageUri = new String[1];
-                    url[i-1] =(String) linksDS.child(tourName).getValue();
-
-                    StorageRef.child(tourName+".jpg").getDownloadUrl()
-                            .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    imageUri[0]=uri.toString();
-                                }});
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Tour newTour = new Tour();
-                            newTour.tourName=tourName;
-                            newTour.tourImageLink=imageUri[0];
-                            adapter.add(newTour);
-                            adapter.notifyDataSetChanged();
-                        }
-                    },3000);
+                for (int i = 1; i <= toursDS.getChildrenCount(); i++) {
+                    final String tourName = (String) toursDS.child(i + "").getValue();
+                    url[i - 1] = (String) linksDS.child(tourName).getValue();
+                    Tour newTour = new Tour();
+                    newTour.tourName = tourName;
+                    newTour.tourImage = images[i - 1];
+                    adapter.add(newTour);
+                    adapter.notifyDataSetChanged();
                 }
-                Log.d(TAG,"List Created");
+                Log.d(TAG, "List Created");
                 pd.dismiss();
             }
-        },3000);
+        },15000);
 
         tourList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -132,6 +129,29 @@ public class ListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private class DownloadImage extends AsyncTask<String,Void,Bitmap> {
+        int id;
+        @Override
+        protected Bitmap doInBackground(String... Url) {
+            String idS=Url[1];
+            id = Integer.parseInt(idS);
+            String imageUrl = Url[0];
+            Bitmap bitmap = null;
+            try{
+                InputStream is=new URL(imageUrl).openStream() ;
+                bitmap = BitmapFactory.decodeStream(is);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            images[id]=bitmap;
+        }
     }
 
 }
