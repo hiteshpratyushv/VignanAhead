@@ -52,23 +52,4 @@ public class MainActivity extends AppCompatActivity {
         finish();
         return true;
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_list,menu);
-        return  true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
-            case R.id.info :
-                Intent intent = new Intent(getApplicationContext(),InfoActivity.class);
-                                startActivity(intent);
-                                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }
