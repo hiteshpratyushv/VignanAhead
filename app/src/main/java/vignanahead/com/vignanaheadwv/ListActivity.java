@@ -62,7 +62,7 @@ public class ListActivity extends AppCompatActivity {
         tourList=(ListView)findViewById(R.id.tourList);
         tours =new ArrayList<Tour>();
         pd = new ProgressDialog(this);
-        pd.setMessage("Fetching.....");
+        pd.setMessage("Loading Virtual Tours.....");
         pd.show();
         Tours.addValueEventListener(new ValueEventListener() {
             @Override
