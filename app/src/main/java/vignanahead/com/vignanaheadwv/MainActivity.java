@@ -2,9 +2,12 @@ package vignanahead.com.vignanaheadwv;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -48,5 +51,24 @@ public class MainActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp(){
         finish();
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_list,menu);
+        return  true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.info :
+                Intent intent = new Intent(getApplicationContext(),InfoActivity.class);
+                                startActivity(intent);
+                                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">VignanAhead</string>
+    <string name="version">Version - v0.1</string>
 </resources>
